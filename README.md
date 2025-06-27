@@ -482,7 +482,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 - **Email:** info.arpan08@gmail.com
 - **GitHub:** [@arpanpatoliya](https://github.com/arpanpatoliya)
-- **LinkedIn:** [Arpan Patoliya](https://linkedin.com/in/arpanpatoliya)
+- **LinkedIn:** [Arpan Patoliya](https://www.linkedin.com/in/arpan-patoliya-1b16961b6/)
 
 ### About the Author
 
