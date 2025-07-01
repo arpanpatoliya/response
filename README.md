@@ -19,7 +19,7 @@ A comprehensive Laravel package for standardized API responses with full HTTP st
 
 ## ✨ Features
 
-- 🚀 **100+ Response Macros** - Complete HTTP status code coverage
+- 🚀 **76 Response Macros** - Complete HTTP status code coverage
 - 📊 **Standardized Format** - Consistent JSON response structure
 - 🎯 **Easy to Use** - Simple, intuitive API
 - 🔧 **Flexible** - Custom status codes and messages
