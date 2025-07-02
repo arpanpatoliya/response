@@ -1,5 +1,8 @@
 # Laravel Response Package
 
+[![Latest Version](https://img.shields.io/packagist/v/arpanpatoliya/response.svg?style=flat-square)](https://packagist.org/packages/arpanpatoliya/response)
+[![License](https://img.shields.io/packagist/l/arpanpatoliya/response.svg?style=flat-square)](LICENSE)
+
 A comprehensive Laravel package for standardized API responses with full HTTP status code coverage and response macros.
 
 <!-- SEO Keywords: Laravel API Response, Laravel JSON Response, Laravel Response Macros, Laravel HTTP Status Codes, Laravel API Standardization, Laravel Response Helper, Laravel API Format, Laravel Response Package, Laravel API Best Practices, Laravel Response Library, Laravel API Documentation, Laravel Response Examples, Laravel API Development, Laravel Response Utilities, Laravel API Testing -->
