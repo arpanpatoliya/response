@@ -4,6 +4,8 @@ namespace Arpanpatoliya\Response\Providers;
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\JsonResponse as LaravelJsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class ResponseServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class ResponseServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerResponseMacros();
+        $this->registerLoggingMacro();
     }
 
     /**
@@ -574,6 +577,38 @@ class ResponseServiceProvider extends ServiceProvider
                 'status' => true,
                 'message' => $message,
             ], 200);
+        });
+    }
+
+    /**
+     * Register a chainable log() macro on JsonResponse instances.
+     */
+    protected function registerLoggingMacro(): void
+    {
+        LaravelJsonResponse::macro('log', function (?string $channel = null, ?string $level = null, ?string $message = null, array $context = []) {
+            $payload = method_exists($this, 'getData') ? $this->getData(true) : null;
+
+            $baseContext = array_filter([
+                'status' => method_exists($this, 'getStatusCode') ? $this->getStatusCode() : null,
+                'payload' => $payload,
+            ], function ($v) {
+                return $v !== null;
+            });
+
+            $mergedContext = array_replace($baseContext, $context);
+
+            $logger = $channel ? Log::channel($channel) : Log::getFacadeRoot();
+            $level = $level ?? 'info';
+            $logMessage = $message ?? 'API response';
+
+            // Dynamically call the PSR-3 level on the logger
+            if (method_exists($logger, $level)) {
+                $logger->{$level}($logMessage, $mergedContext);
+            } else {
+                $logger->info($logMessage, $mergedContext);
+            }
+
+            return $this; // allow chaining
         });
     }
 } 

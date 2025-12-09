@@ -29,6 +29,7 @@ A comprehensive Laravel package for standardized API responses with full HTTP st
 - 📄 **Validation Support** - Built-in validation error handling
 - 📱 **Pagination Support** - Easy paginated responses
 - 🏷️ **Metadata Support** - Add custom metadata to responses
+- 📝 **Logging Integration** - Chainable logging for responses
 - 🧪 **Fully Tested** - Comprehensive test coverage
 - 📚 **Well Documented** - Complete documentation and examples
 - ⚡ **Lightweight** - Minimal overhead, maximum functionality
@@ -124,6 +125,50 @@ return response()->withMeta('Data retrieved', $data, $meta);
 // No content response (204)
 return response()->noContent();
 ```
+
+### Logging Integration
+
+The package provides a chainable `log()` method to log responses to Laravel's logging system. By default, logs are written to the default logging channel.
+
+```php
+// Basic logging (default channel, info level)
+return response()->success('User created', $user)->log();
+
+// With custom channel
+return response()->success('User created', $user)->log('custom-channel');
+
+// With channel and custom log level
+return response()->success('User created', $user)->log('custom-channel', 'warning');
+
+// With channel, level, and custom message
+return response()->success('User created', $user)->log('custom-channel', 'info', 'User was created successfully', ['actor' => auth()->id()]);
+
+// With just level (default channel)
+return response()->success('User created', $user)->log(null, 'error');
+
+// With just custom message (default channel, info level)
+return response()->success('User created', $user)->log(null, null, 'Custom log message');
+
+// Logging error responses
+return response()->notFound('User not found')->log('api-errors', 'warning');
+
+// Logging validation failures
+return response()->validationFailure($validator)->log('validation', 'info');
+```
+
+**Log Parameters:**
+- `$channel` (optional): Specify a custom logging channel. If not provided, uses the default channel.
+- `$level` (optional): PSR-3 log level (`emergency`, `alert`, `critical`, `error`, `warning`, `notice`, `info`, `debug`). Defaults to `info`.
+- `$message` (optional): Custom log message. Defaults to `'API response'`.
+- `$context` (optional): Additional context array to include in the log entry.
+
+**Log Context:**
+The log automatically includes:
+- `status`: HTTP status code
+- `payload`: Response payload/data
+- Any additional context you pass
+
+
 
 ## 🌐 HTTP Status Codes
 
@@ -223,6 +268,11 @@ return response()->noContent();
 | `withMeta()` | 200 | Response with metadata |
 | `updated()` | 200 | Resource updated |
 | `deleted()` | 200 | Resource deleted |
+
+### Logging Method
+| Method | Description |
+|-------|-------------|
+| `log()` | Chainable logging method for responses. Supports custom channel, level, message, and context. |
 
 ## 📄 Response Format
 
@@ -464,6 +514,7 @@ The tests cover all response macros, ensuring they return the correct status cod
 - ✅ Pagination responses
 - ✅ Metadata responses
 - ✅ Custom responses
+- ✅ Logging integration
 
 ## 🤝 Contributing
 
